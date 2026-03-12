@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Venta {
-    private String idVenta;
+private String idVenta;
    private Cliente cliente;
    private Empleado empleado;
    private List<Producto> productos;
@@ -15,10 +15,11 @@ public class Venta {
       this.empleado = empleado;
       this.fecha = fecha;
       this.productos = new ArrayList<>();
+      this.total = 0.0;
    }
 
-   public void agregarProducto(Producto var1) {
-      this.productos.add(var1);
+   public void agregarProducto(Producto productos) {
+      this.productos.add(productos);
    }
 
    public double calcularTotal() {

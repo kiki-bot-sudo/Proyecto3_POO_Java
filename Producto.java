@@ -14,7 +14,12 @@ public abstract class Producto implements Vendible{
 
     }
 
+
     abstract double calcularPreciofinal();
+
+    public String generarEtiqueta(){
+        return "Producto: " + nombre + " codigo: " + codigo + "Precio: " + calcularPreciofinal();
+    }
 
     public String getCodigo() {
         return codigo;
@@ -33,6 +38,8 @@ public abstract class Producto implements Vendible{
     public double getPrecio() {
         return precio;
     }
+
+
 
     @Override
     public String toString() {

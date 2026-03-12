@@ -1,14 +1,16 @@
 public abstract class Empleado {
     //atributos
-    private String id;
-    private String nombre;
-    private double salario;
+    protected  String id;
+    protected  String nombre;
+    protected  double salario;
+    protected  String puesto;
     
     //Constructor
-    public Empleado(String id, String nombre, double salario){
+    public Empleado(String id, String nombre, double salario, String puesto){
         this.id= id;
         this.nombre = nombre;
         this.salario = salario;
+        this.puesto = puesto;
     }
 
     //getters
@@ -25,7 +27,9 @@ public abstract class Empleado {
     }
 
     //metodos abstractos
-    public abstract void calcularSalario();
+    public abstract double calcularSalario();
+    public abstract String getPuesto();
+    
 
     @Override
     public String toString() {

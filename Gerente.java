@@ -1,10 +1,11 @@
-public class Gerente {
+public class Gerente extends Empleado {
 
     // Atributo
     private String departamento;
 
     // Constructor
-    public Gerente(String departamento) {
+    public Gerente(String id, String nombre, double salario, String puesto, String departamento) {
+        super(id, nombre, salario, puesto);
         this.departamento = departamento;
     }
 
@@ -20,6 +21,11 @@ public class Gerente {
 
     public String getPuesto() {
         return "Gerente";
+    }
+
+    @Override
+    public double calcularSalario(){
+        return salario;
     }
 
     @Override
