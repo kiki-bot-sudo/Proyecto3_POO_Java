@@ -1,4 +1,4 @@
-abstract class Producto implements Vendible{
+public abstract class Producto implements Vendible{
 
     protected String codigo; // Actualizar de privado a protected
     protected String nombre;
@@ -34,6 +34,7 @@ abstract class Producto implements Vendible{
         return precio;
     }
 
+    @Override
     public String toString() {
         return "Codigo: " + codigo + " Nombre: " + nombre + " Precio: $" + precio;
     }

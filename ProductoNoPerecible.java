@@ -3,7 +3,7 @@ public class ProductoNoPerecible extends Producto  {
     private double descuento;
 
     
-    public ProductoNoPerecible(String codigo, String nombre, String fechaVencimineto, String categoria, int cantidad, double precio, double descuento){
+    public ProductoNoPerecible(String codigo, String nombre, String categoria, int cantidad, double precio, double descuento){
         super(codigo, nombre, cantidad, precio);
         this.categoria = categoria;
         this.descuento =descuento;
