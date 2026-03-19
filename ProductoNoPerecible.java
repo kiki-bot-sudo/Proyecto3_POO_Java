@@ -1,42 +1,76 @@
-public class ProductoNoPerecible extends Producto  {
-    private String categoria;
-    private double promocion; // agregar al UMl
-    
+abstract class Producto implements Vendible{
+
+    private String codigo; 
+    private String nombre;
+    private double precio;
+    private int cantidad;
 
     
-    public ProductoNoPerecible(String codigo, String nombre, String categoria, int cantidad, double precio, double promocion)throws ProductoException{
-        super(codigo, nombre, cantidad, precio);
-        if (categoria == null || categoria.trim().isEmpty()){
-            throw new ProductoException("Error la categoría no puede estar vacía ");
+    public Producto(String codigo, String nombre, int cantidad, double precio )throws ProductoException { 
+        if (codigo == null || codigo.trim().isEmpty()) {
+            throw new ProductoException("El código del producto no puede estar vacío");
         }
-        if(promocion < 0 || promocion > 100){
-            throw new ProductoException("Error la promocion no puede ser negativo debe de ser entre 0 y 100 %");
+        this.cantidad = cantidad;
+
+        if (nombre == null || codigo.trim().isEmpty()) {
+            throw new ProductoException("El código del producto no puede estar vacío ");
         }
-        this.categoria = categoria;
-        this.promocion = promocion;
+        this.codigo = codigo;
+
+        if (precio <= 0) {
+            throw new ProductoException("El precio debe ser mayor a 0");
+        }
+        if (cantidad <= 0) {
+            throw new ProductoException(" El precio debe ser mayor a 0 ");
+        }
+        
+        this.precio = precio;
+        
+        this.nombre = nombre;
+
     }
 
-    public void setPromocion(double promocion)throws ProductoException {
-        if(promocion < 0 || promocion > 100){
-            throw new ProductoException("Error la promocion no puede ser negativo debe de ser entre 0 y 100 %");
+
+    // setter
+    public void setCantidad(int cantidad)throws ProductoException {
+        if (cantidad <= 0) {
+            throw new ProductoException(" El precio debe ser mayor a 0 ");
         }
-        this.promocion = promocion;
+        this.cantidad = cantidad;
     }
-    public double getPromocion() {
-        return promocion;
+    public void setPrecio(double precio) {
+
+        if (precio < 0) {
+            throw new IllegalArgumentException("Error el precio no puede ser negativo");
+        }
+        this.precio = precio;
     }
 
-    @Override
-    double calcularPrecioFinal(){
-        return getPrecio() - (getPrecio() * (promocion /100)) ;
-    }
-    @Override
-    public String generarEtiqueta(){
-        return "Producto: " + getNombre() + " codigo: " + getCodigo()  + "Precio: " + calcularPrecioFinal();
-    }
-
-    @Override
+    //metodos x
     public String toString() {
-        return super.toString() + " Promocion: " + promocion +" % " + "Categoria" + categoria;
+        return "Codigo: " + codigo + " Nombre: " + nombre + " Precio: $: " + precio + "Cantidad: " + cantidad;
     }
+
+    abstract double calcularPrecioFinal();
+
+    //getter
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+    
+    public String getNombre() {
+        return nombre;
+    }
+    public double getPrecio() {
+        return precio;
+    }
+    
+
+    
+
+    
 }
