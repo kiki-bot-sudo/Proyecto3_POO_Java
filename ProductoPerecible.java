@@ -44,6 +44,20 @@ public class ProductoPerecible extends Producto {
     public String toString() {
         return super.toString() + " Vence: " + fechaVencimiento+ " Descuento: " + descuento + " % " + "Categoria" + categoria;
     }
+
+    public String getFechaVencimiento() {
+        return fechaVencimiento;
+    }
+    public double getDescuento() {
+        return descuento;
+    }
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setFechaVencimiento(String fechaVencimiento) {
+        this.fechaVencimiento = fechaVencimiento;
+    }
     
 
 
