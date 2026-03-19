@@ -1,26 +1,59 @@
-public abstract class Producto implements Vendible{
+abstract class Producto implements Vendible{
 
-    protected String codigo; // Actualizar de privado a protected
-    protected String nombre;
-    protected double precio;
-    protected int cantidad;
+    private String codigo; 
+    private String nombre;
+    private double precio;
+    private int cantidad;
 
-    //agregar este constructor al UML
-    public Producto(String codigo, String nombre, int cantidad, double precio ){ 
+    
+    public Producto(String codigo, String nombre, int cantidad, double precio )throws ProductoException { 
+        if (codigo == null || codigo.trim().isEmpty()) {
+            throw new ProductoException("El código del producto no puede estar vacío");
+        }
         this.cantidad = cantidad;
+
+        if (nombre == null || codigo.trim().isEmpty()) {
+            throw new ProductoException("El código del producto no puede estar vacío ");
+        }
         this.codigo = codigo;
+
+        if (precio <= 0) {
+            throw new ProductoException("El precio debe ser mayor a 0");
+        }
+        if (cantidad <= 0) {
+            throw new ProductoException(" El precio debe ser mayor a 0 ");
+        }
+        
         this.precio = precio;
+        
         this.nombre = nombre;
 
     }
 
 
-    abstract double calcularPreciofinal();
+    // setter
+    public void setCantidad(int cantidad)throws ProductoException {
+        if (cantidad <= 0) {
+            throw new ProductoException(" El precio debe ser mayor a 0 ");
+        }
+        this.cantidad = cantidad;
+    }
+    public void setPrecio(double precio) {
 
-    public String generarEtiqueta(){
-        return "Producto: " + nombre + " codigo: " + codigo + "Precio: " + calcularPreciofinal();
+        if (precio < 0) {
+            throw new IllegalArgumentException("Error el precio no puede ser negativo");
+        }
+        this.precio = precio;
     }
 
+    //metodos x
+    public String toString() {
+        return "Codigo: " + codigo + " Nombre: " + nombre + " Precio: $: " + precio + "Cantidad: " + cantidad;
+    }
+
+    abstract double calcularPrecioFinal();
+
+    //getter
     public String getCodigo() {
         return codigo;
     }
@@ -28,21 +61,16 @@ public abstract class Producto implements Vendible{
     public int getCantidad() {
         return cantidad;
     }
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
-
+    
     public String getNombre() {
         return nombre;
     }
     public double getPrecio() {
         return precio;
     }
+    
 
+    
 
-
-    @Override
-    public String toString() {
-        return "Codigo: " + codigo + " Nombre: " + nombre + " Precio: $" + precio;
-    }
+    
 }
