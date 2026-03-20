@@ -1,3 +1,7 @@
+package com.tienda.empleados;
+
+import com.tienda.models.Producto;
+
 public class Gerente extends Empleado {
 
     // Atributo

@@ -1,4 +1,9 @@
-abstract class Producto implements Vendible{
+package com.tienda.models;
+
+import com.tienda.exceptions.ProductoException;
+import com.tienda.interfaces.Vendible;
+
+public abstract class Producto implements Vendible {
 
     private String codigo; 
     private String nombre;
@@ -6,14 +11,14 @@ abstract class Producto implements Vendible{
     private int cantidad;
 
     
-    public Producto(String codigo, String nombre, int cantidad, double precio )throws ProductoException { 
+    public Producto(String codigo, String nombre, int cantidad, double precio) throws ProductoException { 
         if (codigo == null || codigo.trim().isEmpty()) {
             throw new ProductoException("El código del producto no puede estar vacío");
         }
         this.cantidad = cantidad;
 
-        if (nombre == null || codigo.trim().isEmpty()) {
-            throw new ProductoException("El código del producto no puede estar vacío ");
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new ProductoException("El nombre del producto no puede estar vacío ");
         }
         this.codigo = codigo;
 
@@ -32,12 +37,13 @@ abstract class Producto implements Vendible{
 
 
     // setter
-    public void setCantidad(int cantidad)throws ProductoException {
+    public void setCantidad(int cantidad) throws ProductoException {
         if (cantidad <= 0) {
             throw new ProductoException(" El precio debe ser mayor a 0 ");
         }
         this.cantidad = cantidad;
     }
+    
     public void setPrecio(double precio) {
 
         if (precio < 0) {
@@ -47,11 +53,12 @@ abstract class Producto implements Vendible{
     }
 
     //metodos x
+    @Override
     public String toString() {
         return "Codigo: " + codigo + " Nombre: " + nombre + " Precio: $: " + precio + "Cantidad: " + cantidad;
     }
 
-    abstract double calcularPrecioFinal();
+    public abstract double calcularPrecioFinal();
 
     //getter
     public String getCodigo() {
@@ -65,12 +72,8 @@ abstract class Producto implements Vendible{
     public String getNombre() {
         return nombre;
     }
+    
     public double getPrecio() {
         return precio;
     }
-    
-
-    
-
-    
 }

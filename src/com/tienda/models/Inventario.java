@@ -1,5 +1,8 @@
+package com.tienda.models;
+
 import java.util.ArrayList;
 import java.util.List;
+import com.tienda.empleados.Empleado;
 
 public class Inventario {
     private List<Producto> productos;
@@ -39,11 +42,10 @@ public class Inventario {
         provedores.add(p);
     }
 
-     @Override
+    @Override
     public String toString() {
         return "Inventario{productos=" + productos.size() +
                ", empleados=" + empleados.size() +
                ", ventas=" + ventas.size() + "}";
     }
 }
-

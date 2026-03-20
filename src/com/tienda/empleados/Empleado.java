@@ -1,3 +1,5 @@
+package com.tienda.empleados;
+
 public abstract class Empleado {
     //atributos
     protected  String id;
@@ -7,6 +9,19 @@ public abstract class Empleado {
     
     //Constructor
     public Empleado(String id, String nombre, double salario, String puesto){
+        if (id == null || id.trim().isEmpty()) {
+            throw new IllegalArgumentException("El ID del empleado no puede estar vacío");
+        }
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre del empleado no puede estar vacío");
+        }
+        if (salario < 0) {
+            throw new IllegalArgumentException("El salario no puede ser negativo");
+        }
+        if (puesto == null || puesto.trim().isEmpty()) {
+            throw new IllegalArgumentException("El puesto del empleado no puede estar vacío");
+        }
+        
         this.id= id;
         this.nombre = nombre;
         this.salario = salario;
@@ -37,7 +52,7 @@ public abstract class Empleado {
                 "id='" + id + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", salario=" + salario +
+                ", puesto='" + puesto + '\'' +
                 '}';
     }
-
 }

@@ -1,4 +1,8 @@
-public class Cajero extends Empleado{
+package com.tienda.empleados;
+
+import com.tienda.models.Venta;
+
+public class Cajero extends Empleado {
 
     // Atributos
     private int cajaAsignada;
@@ -16,7 +20,7 @@ public class Cajero extends Empleado{
         return cajaAsignada;
     }
 
-     public void procesarVenta(Venta venta) {
+    public void procesarVenta(Venta venta) {
         // Lógica para procesar la venta
         System.out.println("Procesando venta: " + venta.toString());
     }
