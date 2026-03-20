@@ -1,3 +1,5 @@
+package com.tienda.models;
+
 public class Provedor {
     private String id;
     private String nombre;

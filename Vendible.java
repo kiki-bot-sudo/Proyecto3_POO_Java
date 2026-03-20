@@ -1,3 +1,0 @@
-interface Vendible {
-    String generarEtiqueta(); 
-}
