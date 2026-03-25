@@ -59,6 +59,7 @@ public abstract class Producto implements Vendible {
     }
 
     public abstract double calcularPrecioFinal();
+    public abstract String getCategoria();
 
     //getter
     public String getCodigo() {
