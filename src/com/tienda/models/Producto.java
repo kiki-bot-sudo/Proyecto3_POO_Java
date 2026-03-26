@@ -57,6 +57,12 @@ public abstract class Producto implements Vendible {
     public String toString() {
         return "Codigo: " + codigo + " Nombre: " + nombre + " Precio: $: " + precio + "Cantidad: " + cantidad;
     }
+    
+    public String toCSV() {
+        return new StringBuilder()
+            .append(codigo).append(",").append(nombre).append(",").append(precio)
+            .append(",").append(cantidad).toString();
+    }
 
     public abstract double calcularPrecioFinal();
     public abstract String getCategoria();
