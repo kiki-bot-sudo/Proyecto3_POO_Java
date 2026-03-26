@@ -1,11 +1,11 @@
 package com.tienda.models;
 
-public class Provedor {
+public class Proveedor {
     private String id;
     private String nombre;
     private String telefono;
 
-    public Provedor(String id, String nombre, String telefono){
+    public Proveedor(String id, String nombre, String telefono){
         this.id = id;
         this.nombre = nombre;
         this.telefono = telefono;
@@ -25,7 +25,7 @@ public class Provedor {
 
     @Override
     public String toString() {
-        return "Provedor{" +
+        return "Proveedor{" +
                 "id='" + id + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", telefono='" + telefono + '\'' +

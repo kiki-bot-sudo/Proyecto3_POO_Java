@@ -7,13 +7,13 @@ import com.tienda.exceptions.SinCodigoEncontradoException;
 
 public class Inventario {
     private List<Producto> productos;
-    private List<Provedor> provedores;
+    private List<Proveedor> proveedores;
     private List<Empleado> empleados;
     private List<Venta> ventas;
 
     public Inventario() {
         this.productos = new ArrayList<>();
-        this.provedores = new ArrayList<>();
+        this.proveedores = new ArrayList<>();
         this.empleados = new ArrayList<>();
         this.ventas = new ArrayList<>();
     }
@@ -79,8 +79,8 @@ public class Inventario {
         empleados.add(e);
     }
 
-    public void agregarProvedor(Provedor p) {
-        provedores.add(p);
+    public void agregarProveedor(Proveedor p) {
+        proveedores.add(p);
     }
 
     @Override
