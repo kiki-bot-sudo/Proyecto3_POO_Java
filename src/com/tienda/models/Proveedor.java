@@ -22,6 +22,17 @@ public class Proveedor {
     public String getTelefono(){
         return telefono;
     }
+public String toCSV() {
+    return id + "," + nombre + "," + telefono; // tus atributos
+}
+
+public static Proveedor fromCSV(String linea) {
+    String[] campos = linea.split(",");
+    String id = (campos[0].trim());
+    String nombre = campos[1].trim();
+    String telefono = campos[2].trim();
+    return new Proveedor(id, nombre, telefono);
+}
 
     @Override
     public String toString() {
