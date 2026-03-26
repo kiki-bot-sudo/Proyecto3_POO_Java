@@ -2,6 +2,8 @@ package com.tienda;
 
 import com.tienda.empleados.*;
 import com.tienda.exceptions.ProductoException;
+import com.tienda.exceptions.SalarioInvalidoException;
+import com.tienda.exceptions.EmpleadoException;
 import com.tienda.models.*;
 
 public class Main {
@@ -17,7 +19,15 @@ public class Main {
             inventario.agregarProducto(arroz);
             inventario.agregarProducto(leche);
 
-            Empleado cajero = new Cajero("E01", "Ana", 500.0, "Cajero", 1, 30);
+            
+    Empleado cajero = null; 
+     try {
+        cajero = new Cajero("C001", "Ana", 500.0, 1, 20);
+} catch (SalarioInvalidoException e) {
+    System.err.println(e.getMessage());
+} catch (EmpleadoException e) {
+    System.err.println(e.getMessage());
+}
             inventario.agregarEmpleado(cajero);
 
             Cliente cliente = new Cliente("C001", "Carlos", "carlos@example.com");
