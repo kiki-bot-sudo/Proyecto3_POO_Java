@@ -15,7 +15,6 @@ public class TiendaServicio {
         empleados.add(e);
     }
 
-    // ✅ Eliminación con Iterator — evita ConcurrentModificationException
     public void eliminarEmpleado(String id) throws EmpleadoNoEncontradoException {
         Iterator<Empleado> it = empleados.iterator();
         boolean encontrado = false;
@@ -33,7 +32,6 @@ public class TiendaServicio {
             throw new EmpleadoNoEncontradoException(id);
     }
 
-    // ✅ Filtrado por puesto con Iterator
     public List<Empleado> filtrarPorPuesto(String puesto) {
         List<Empleado> resultado = new ArrayList<>();
         Iterator<Empleado> it = empleados.iterator();
@@ -46,7 +44,6 @@ public class TiendaServicio {
         return resultado;
     }
 
-    // ✅ Filtrado por salario mínimo con Iterator
     public List<Empleado> filtrarPorSalarioMinimo(double minimo) {
         List<Empleado> resultado = new ArrayList<>();
         Iterator<Empleado> it = empleados.iterator();

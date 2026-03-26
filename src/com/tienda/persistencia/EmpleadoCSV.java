@@ -14,7 +14,6 @@ public class EmpleadoCSV {
 
     private static final String RUTA = "empleados.csv";
 
-    // ✅ Escribe la lista completa al archivo
     public static void escribir(List<Empleado> empleados) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(RUTA))) {
             writer.write("id,nombre,salario,puesto,extra1,extra2");
@@ -26,7 +25,6 @@ public class EmpleadoCSV {
         }
     }
 
-    // ✅ Lee el archivo y reconstruye la lista usando fromCSV()
     public static List<Empleado> leer() throws IOException {
         List<Empleado> lista = new ArrayList<>();
         File archivo = new File(RUTA);
@@ -42,7 +40,7 @@ public class EmpleadoCSV {
                 if (primeraLinea) {
                     primeraLinea = false;
                     continue;
-                } // salta encabezado
+                }
                 if (linea.trim().isEmpty())
                     continue;
 
