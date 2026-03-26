@@ -22,6 +22,22 @@ public class Cliente {
         return email;
     }
    
+    public static Cliente fromCSV(String linea) throws Exception {
+        String[] campos = linea.split(",");
+        if (campos.length < 3)
+            throw new Exception("Línea CSV inválida para Cliente: " + linea);
+
+        String id = campos[0].trim();
+        String nombre = campos[1].trim();
+        String email = campos[2].trim();
+
+        return new Cliente(id, nombre, email);
+    }
+    
+    public String toCSV() {
+        return id + "," + nombre + "," + email;
+    }
+
     @Override
     public String toString() {
         return "Cliente{" +
