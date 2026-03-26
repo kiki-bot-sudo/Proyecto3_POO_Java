@@ -35,7 +35,7 @@ public class ProductoPerecible extends Producto {
     }
 
     @Override
-    double calcularPrecioFinal(){
+     public double calcularPrecioFinal(){
         return getPrecio() - (getPrecio() * (descuento /100)) ;
     }
 
