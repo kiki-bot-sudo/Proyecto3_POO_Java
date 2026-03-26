@@ -13,7 +13,7 @@ public class ClienteCSV {
 
     public static void escribir(List<Cliente> clientes) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(RUTA))) {
-            writer.write("id,nombre,edad");
+            writer.write("id,nombre,email");
             writer.newLine();
             for (Cliente c : clientes) {
                 writer.write(c.toCSV());
