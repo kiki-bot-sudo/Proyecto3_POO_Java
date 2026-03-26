@@ -59,7 +59,7 @@ public class VentaCSV {
     private static Venta parsearVenta(String linea, List<Cliente> clientes, List<Empleado> empleados)
             throws ClienteNoEncontradoException, EmpleadoNoEncontradoException {
         String[] campos = linea.split(",");
-        if (campos.length < 5) {
+        if (campos.length != 5) {
             throw new IllegalArgumentException("Linea CSV invalida para Venta: " + linea);
         }
 
