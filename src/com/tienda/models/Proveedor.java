@@ -23,12 +23,12 @@ public class Proveedor {
         return telefono;
     }
 public String toCSV() {
-    return id + "," + nombre + "," + telefono; // tus atributos
+    return id + "," + nombre + "," + telefono; 
 }
 
 public static Proveedor fromCSV(String linea) {
     String[] campos = linea.split(",");
-    
+
     if (campos.length < 3)                         
         throw new RuntimeException("Línea CSV inválida para Proveedor: " + linea);
 
