@@ -25,18 +25,6 @@ public abstract class Empleado {
         this.salario = salario;
         this.puesto = puesto;
     }
-    
- private boolean salarioValido(double salario) {
-        return salario > 0; 
-    }
-
-    public void setSalario(double salario) throws SalarioInvalidoException {
-        if (salarioValido(salario)) {
-            this.salario = salario;
-        } else {
-            throw new SalarioInvalidoException(salario);
-        }
-    }
 
     // Getters
     public String getId() {
