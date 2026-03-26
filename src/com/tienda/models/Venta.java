@@ -71,6 +71,35 @@ public class Venta {
         return this.fecha;
     }
 
+    public String toCSV() {
+        return idVenta + "," + cliente.getId() + "," + empleado.getId() + "," + fecha + "," + total;
+    }
+
+    public static Venta fromCSV(String linea, Cliente cliente, Empleado empleado) {
+        if (linea == null || linea.trim().isEmpty()) {
+            throw new IllegalArgumentException("La línea CSV de venta no puede estar vacía");
+        }
+        if (cliente == null) {
+            throw new IllegalArgumentException("El cliente no puede ser nulo para reconstruir la venta");
+        }
+        if (empleado == null) {
+            throw new IllegalArgumentException("El empleado no puede ser nulo para reconstruir la venta");
+        }
+
+        String[] campos = linea.split(",");
+        if (campos.length < 5) {
+            throw new IllegalArgumentException("Línea CSV inválida para Venta: " + linea);
+        }
+
+        String idVenta = campos[0].trim();
+        String fecha = campos[3].trim();
+        double total = Double.parseDouble(campos[4].trim());
+
+        Venta venta = new Venta(idVenta, cliente, empleado, fecha);
+        venta.total = total;
+        return venta;
+    }
+
     @Override
     public String toString() {
         return "Venta{" +
