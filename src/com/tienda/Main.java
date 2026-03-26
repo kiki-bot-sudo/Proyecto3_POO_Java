@@ -20,7 +20,7 @@ public class Main {
             Empleado cajero = new Cajero("E01", "Ana", 500.0, "Cajero", 1, 30);
             inventario.agregarEmpleado(cajero);
 
-            Cliente cliente = new Cliente("Carlos");
+            Cliente cliente = new Cliente("C001", "Carlos", "carlos@example.com");
             Venta venta = new Venta("V001", cliente, cajero, "2026-03-12");
             venta.agregarProducto(arroz);
             venta.agregarProducto(leche);
