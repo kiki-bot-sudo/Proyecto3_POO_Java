@@ -1,4 +1,4 @@
-
+package com.tienda.interfaces;
 
 public interface strategiaPrecio {
 
