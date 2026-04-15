@@ -64,10 +64,26 @@ public abstract class Producto implements Vendible {
             .append(",").append(cantidad).toString();
     }
 
+    @Override
     public abstract double calcularPrecioFinal();
+    @Override
+    public abstract boolean estaDisponible();
+
+    //Metodos 
+    //nuevo
+    public void reducirCantidad(int unidades) throws  ProductoException{
+        if (unidades > cantidad) {
+            throw new ProductoException("Error la cantidad es insuficiente");
+        }
+        cantidad -= unidades;
+    }
+
+    
     public abstract String getCategoria();
 
     //getter
+
+    
     public String getCodigo() {
         return codigo;
     }
