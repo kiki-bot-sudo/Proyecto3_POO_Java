@@ -34,10 +34,20 @@ public class ProductoPerecible extends Producto {
         this.descuento = descuento;
     }
 
+    // agregar 
     @Override
-     public double calcularPrecioFinal(){
-        return getPrecio() - (getPrecio() * (descuento /100)) ;
+    public boolean estaDisponible() {
+        return getCantidad() > 0;
     }
+    public void setEstrategiaPrecio(PrecioStrategy estrategiaPrecio) {
+            this.estrategiaPrecio = estrategiaPrecio;
+    }
+
+    @Override
+    public double calcularPrecioFinal() {
+        return estrategiaPrecio.calcular(getPrecio(), descuento, getCantidad());
+    }
+    
 
     @Override
     public String generarEtiqueta(){
