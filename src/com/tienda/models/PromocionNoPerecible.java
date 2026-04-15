@@ -1,4 +1,9 @@
-public class PromocionNoPerecible implements PrecioStrategy   {
+package com.tienda.models;
+
+
+import com.tienda.interfaces.StrategiaPrecio ;
+
+public class PromocionNoPerecible implements StrategiaPrecio    {
     
 
     private static int  cantidadMaxima = 30;
