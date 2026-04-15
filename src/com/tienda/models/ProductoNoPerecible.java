@@ -20,6 +20,21 @@ public class ProductoNoPerecible extends Producto  {
         this.promocion = promocion;
     }
 
+     @Override
+    public boolean estaDisponible() {
+        return getCantidad() > 0;
+    }
+
+    //metodos nuevos 
+    public void setEstrategiaPrecio(PrecioStrategy estrategiaPrecio) {
+        this.estrategiaPrecio = estrategiaPrecio;
+    }
+
+    @Override
+    public double calcularPrecioFinal(){
+        return estrategiaPrecio.calcular(getPrecio(), promocion, getCantidad());
+    }
+
     @Override
     public String toCSV() {
         return "No Perecible," + super.toCSV() + "," + categoria + "," + promocion;                
