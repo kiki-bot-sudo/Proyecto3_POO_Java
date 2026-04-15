@@ -1,6 +1,6 @@
 package com.tienda.interfaces;
 
-public interface strategiaPrecio {
+public interface StrategiaPrecio {
 
     double calcular(double precioBase, double porcentaje, int cantidad);
     
