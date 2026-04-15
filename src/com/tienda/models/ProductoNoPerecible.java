@@ -54,10 +54,6 @@ public class ProductoNoPerecible extends Producto  {
     }
 
     @Override
-    public double calcularPrecioFinal(){
-        return getPrecio() - (getPrecio() * (promocion /100)) ;
-    }
-    @Override
     public String generarEtiqueta(){
         return "Producto: " + getNombre() + " codigo: " + getCodigo()  + "Precio: " + calcularPrecioFinal();
     }
