@@ -1,5 +1,5 @@
 package com.tienda.models;
-
+import com.tienda.exceptions.CSVParseException;
 public class Proveedor {
     private String id;
     private String nombre;
@@ -26,11 +26,11 @@ public String toCSV() {
     return id + "," + nombre + "," + telefono; 
 }
 
-public static Proveedor fromCSV(String linea) {
+public static Proveedor fromCSV(String linea) throws CSVParseException {
     String[] campos = linea.split(",");
 
     if (campos.length < 3)                         
-        throw new RuntimeException("Línea CSV inválida para Proveedor: " + linea);
+        throw new CSVParseException("Línea CSV inválida para Proveedor: " + linea);
 
     String id = (campos[0].trim());
     String nombre = campos[1].trim();

@@ -1,5 +1,6 @@
 package com.tienda.persistencia;
 
+import com.tienda.exceptions.CSVParseException;
 import com.tienda.models.Proveedor; 
 
 import java.io.*;
@@ -21,7 +22,7 @@ public class ProveedorCSV {
         }
     }
 
-    public static List<Proveedor> leer() throws IOException {
+    public static List<Proveedor> leer() throws CSVParseException {
         List<Proveedor> lista = new ArrayList<>();
         File archivo = new File(RUTA);
 
@@ -42,10 +43,13 @@ public class ProveedorCSV {
 
                 try {
                     lista.add(Proveedor.fromCSV(linea));
-                } catch (Exception e) {
+                } catch (CSVParseException e) {
                     System.err.println("Error al leer línea: " + linea + " → " + e.getMessage());
                 }
+
             }
+        } catch (IOException e) {
+            throw new CSVParseException("Error al leer el archivo CSV: " + e.getMessage());
         }
         return lista;
     }
