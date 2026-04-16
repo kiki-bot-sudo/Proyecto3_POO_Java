@@ -2,6 +2,9 @@ package com.tienda.servicios;
 
 import com.tienda.empleados.Empleado;
 import com.tienda.exceptions.CSVParseException;
+import com.tienda.exceptions.EmpleadoNoEncontradoException;
+import com.tienda.exceptions.SinCodigoEncontradoException;
+import com.tienda.exceptions.ClienteNoEncontradoException;
 import com.tienda.models.Cliente;
 import com.tienda.models.Producto;
 import com.tienda.models.Proveedor;
@@ -92,6 +95,33 @@ public class TiendaServicio {
     public void registrarVenta(Venta venta) {
         ventas.add(venta);
         guardarDatos();
+    }
+
+    public Producto buscarProductoPorCodigo(String codigo) throws SinCodigoEncontradoException {
+        for (Producto producto : productos) {
+            if (producto.getCodigo().equals(codigo)) {
+                return producto;
+            }
+        }
+        throw new SinCodigoEncontradoException(codigo);
+    }
+
+    public Cliente buscarClientePorId(String id) throws ClienteNoEncontradoException {
+        for (Cliente cliente : clientes) {
+            if (cliente.getId().equals(id)) {
+                return cliente;
+            }
+        }
+        throw new ClienteNoEncontradoException(id);
+    }
+
+    public Empleado buscarEmpleadoPorId(String id) throws EmpleadoNoEncontradoException {
+        for (Empleado empleado : empleados) {
+            if (empleado.getId().equals(id)) {
+                return empleado;
+            }
+        }
+        throw new EmpleadoNoEncontradoException(id);
     }
 
     public List<Cliente> getClientes() {
