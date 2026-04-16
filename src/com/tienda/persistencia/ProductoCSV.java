@@ -39,14 +39,19 @@ public class ProductoCSV {
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             String linea;
             while ((linea = br.readLine()) != null) {
+                if (linea.trim().isEmpty()) {
+                    continue;
+                }
 
                 try {
                     String tipo = linea.split(",")[0].trim();
                     if (tipo.equals("Perecible")) {
                         lista.add(ProductoPerecible.fromCSV(linea));
 
-                    } else if (tipo.equals("No_perecible")) {
+                    } else if (tipo.equalsIgnoreCase("No_Perecible")) {
                         lista.add(ProductoNoPerecible.fromCSV(linea));
+                    } else {
+                        System.out.println("Linea ignorada por tipo desconocido: " + linea);
                     }
                 } catch (ProductoException e) {
                     System.out.println("Linea ignorada por datos invalidos: " + e.getMessage());

@@ -1,6 +1,7 @@
 package com.tienda.models;
 import com.tienda.exceptions.ProductoException;
 import com.tienda.interfaces.StrategiaPrecio;
+import com.tienda.models.PromocionNoPerecible;
 
 
 public class ProductoNoPerecible extends Producto  { 
@@ -10,6 +11,7 @@ public class ProductoNoPerecible extends Producto  {
     
     public ProductoNoPerecible(String codigo, String nombre, String categoria, int cantidad, double precio, double promocion)throws ProductoException{
         super(codigo, nombre, cantidad, precio);
+        this.estrategiaPrecio = new PromocionNoPerecible();
         if (categoria == null || categoria.trim().isEmpty()){
             throw new ProductoException("Error la categoría no puede estar vacía ");
         }
@@ -45,7 +47,7 @@ public class ProductoNoPerecible extends Producto  {
 
     @Override
     public String toCSV() {
-        return "No_Perecible" + super.toCSV() + "," + categoria + "," + promocion;                
+        return "No_Perecible," + super.toCSV() + "," + categoria + "," + promocion;
     }
     
     @Override

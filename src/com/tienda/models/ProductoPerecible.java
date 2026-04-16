@@ -1,6 +1,7 @@
 package com.tienda.models;
 import com.tienda.exceptions.ProductoException;
 import com.tienda.interfaces.StrategiaPrecio;
+import com.tienda.models.DescuentoPerecible;
 
 public class ProductoPerecible extends Producto { 
     private String fechaVencimiento;   
@@ -10,6 +11,7 @@ public class ProductoPerecible extends Producto {
 
     public ProductoPerecible(String codigo, String nombre, String fechaVencimiento, String categoria, int cantidad, double precio, double descuento) throws ProductoException{
         super(codigo, nombre, cantidad, precio);
+        this.estrategiaPrecio = new DescuentoPerecible();
 
         if (fechaVencimiento == null || fechaVencimiento.trim().isEmpty()){
             throw new ProductoException("La fecha de vencimiento no puede estar vacía ");
