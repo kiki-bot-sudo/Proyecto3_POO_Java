@@ -27,15 +27,38 @@ public String toCSV() {
 }
 
 public static Proveedor fromCSV(String linea) throws CSVParseException {
-    String[] campos = linea.split(",");
+    try {
+        String[] campos = linea.split(",");
 
-    if (campos.length < 3)                         
-        throw new CSVParseException("Línea CSV inválida para Proveedor: " + linea);
+        if (campos.length < 3) {
+            throw new CSVParseException("Línea CSV inválida: " + linea);
+        }
 
-    String id = (campos[0].trim());
-    String nombre = campos[1].trim();
-    String telefono = campos[2].trim();
-    return new Proveedor(id, nombre, telefono);
+        String id = campos[0].trim();
+        String nombre = campos[1].trim();
+        String telefono = campos[2].trim();
+
+        
+        if (id.isEmpty())
+            throw new CSVParseException("ID vacío en línea: " + linea);
+
+        if (nombre.isEmpty())
+            throw new CSVParseException("Nombre vacío en línea: " + linea);
+
+        if (telefono.isEmpty())
+            throw new CSVParseException("Teléfono vacío en línea: " + linea);
+
+        
+        if (!telefono.matches("\\d+")) {
+            throw new CSVParseException("Teléfono inválido: " + telefono);
+        }
+
+        return new Proveedor(id, nombre, telefono);
+
+    } catch (Exception e) {
+        
+        throw new CSVParseException("Error al parsear proveedor: " + linea, e);
+    }
 }
 
     @Override
