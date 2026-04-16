@@ -42,6 +42,7 @@ public class MenuConsola {
                         case 4 -> agregarProducto(scanner);
                         case 5 -> agregarEmpleado(scanner);
                         case 6 -> registrarVenta(scanner);
+                        case 7 -> listarClientesYEmpleados();
                         case 0 -> System.out.println("Saliendo...");
                         default -> System.out.println("Opcion invalida");
                     }
@@ -62,16 +63,24 @@ public class MenuConsola {
         System.out.println("4. Agregar producto");
         System.out.println("5. Agregar empleado");
         System.out.println("6. Registrar venta");
+        System.out.println("7. Listar clientes y empleados");
         System.out.println("0. Salir");
     }
 
     private void mostrarResumen() {
+        System.out.println();
+        System.out.println("===== RESUMEN =====");
         System.out.println("Clientes: " + servicio.getClientes().size());
         System.out.println("Empleados: " + servicio.getEmpleados().size());
         System.out.println("Productos: " + servicio.getProductos().size());
         System.out.println("Proveedores: " + servicio.getProveedores().size());
         System.out.println("Ventas: " + servicio.getVentas().size());
-        System.out.println("Persistencia: datos cargados desde CSV y guardados al agregar registros.");
+        System.out.println();
+        System.out.println("Persistencia:");
+        System.out.println("- Datos cargados desde CSV al iniciar");
+        System.out.println("- Datos guardados al agregar registros");
+        System.out.println("===================");
+        System.out.println();
     }
 
     private void listarProductos(List<Producto> productos) {
@@ -154,6 +163,26 @@ public class MenuConsola {
         venta.calcularTotal();
         servicio.registrarVenta(venta);
         System.out.println("Venta guardada. Total: $" + venta.getTotal());
+    }
+
+    private void listarClientesYEmpleados() {
+        System.out.println("Clientes:");
+        if (servicio.getClientes().isEmpty()) {
+            System.out.println("- Sin clientes");
+        } else {
+            for (Cliente cliente : servicio.getClientes()) {
+                System.out.println("- " + cliente.getId() + " | " + cliente.getNombre());
+            }
+        }
+
+        System.out.println("Empleados:");
+        if (servicio.getEmpleados().isEmpty()) {
+            System.out.println("- Sin empleados");
+        } else {
+            for (Empleado empleado : servicio.getEmpleados()) {
+                System.out.println("- " + empleado.getId() + " | " + empleado.getNombre() + " | " + empleado.getPuesto());
+            }
+        }
     }
 
     private String leerTexto(Scanner scanner, String mensaje) {
