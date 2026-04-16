@@ -9,7 +9,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tienda.models.Producto;
 import com.tienda.models.ProductoPerecible;
 import com.tienda.models.ProductoNoPerecible;
 import com.tienda.exceptions.ProductoException;
@@ -41,10 +40,10 @@ public class ProductoCSV {
 
                 try {
                     String tipo = linea.split(",")[0].trim();
-                    if (tipo.equals("PERECIBLE")) {
+                    if (tipo.equals("Perecible")) {
                         lista.add(ProductoPerecible.fromCSV(linea));
 
-                    } else if (tipo.equals("NOPERECIBLE")) {
+                    } else if (tipo.equals("No_perecible")) {
                         lista.add(ProductoNoPerecible.fromCSV(linea));
                     }
                 } catch (ProductoException e) {

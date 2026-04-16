@@ -1,10 +1,12 @@
 package com.tienda.models;
 import com.tienda.exceptions.ProductoException;
+import com.tienda.interfaces.StrategiaPrecio;
 
 
 public class ProductoNoPerecible extends Producto  { 
     private String categoria;
     private double promocion; 
+    private StrategiaPrecio estrategiaPrecio;
     
     public ProductoNoPerecible(String codigo, String nombre, String categoria, int cantidad, double precio, double promocion)throws ProductoException{
         super(codigo, nombre, cantidad, precio);
@@ -25,7 +27,7 @@ public class ProductoNoPerecible extends Producto  {
     }
 
     //metodos nuevos 
-    public void setEstrategiaPrecio(PrecioStrategy estrategiaPrecio) {
+    public void setEstrategiaPrecio(StrategiaPrecio estrategiaPrecio) {
         this.estrategiaPrecio = estrategiaPrecio;
     }
 

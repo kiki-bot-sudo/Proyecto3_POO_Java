@@ -1,10 +1,12 @@
 package com.tienda.models;
 import com.tienda.exceptions.ProductoException;
+import com.tienda.interfaces.StrategiaPrecio;
 
 public class ProductoPerecible extends Producto { 
     private String fechaVencimiento;   
     private double descuento;
     private String categoria;
+    private StrategiaPrecio estrategiaPrecio;
 
     public ProductoPerecible(String codigo, String nombre, String fechaVencimiento, String categoria, int cantidad, double precio, double descuento) throws ProductoException{
         super(codigo, nombre, cantidad, precio);
@@ -29,7 +31,7 @@ public class ProductoPerecible extends Producto {
     public boolean estaDisponible() {
         return getCantidad() > 0;
     }
-    public void setEstrategiaPrecio(PrecioStrategy estrategiaPrecio) {
+    public void setEstrategiaPrecio(StrategiaPrecio estrategiaPrecio) {
             this.estrategiaPrecio = estrategiaPrecio;
     }
 
