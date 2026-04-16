@@ -1,13 +1,14 @@
 package com.tienda.persistencia;
 
 
+import com.tienda.exceptions.CSVParseException;
 import com.tienda.models.Cliente;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClienteCSV {
+public class ClienteCSV{
     
     private static final String RUTA = "clientes.csv";
 
@@ -21,7 +22,7 @@ public class ClienteCSV {
             }
         }
     }
-public static List<Cliente> leer() throws IOException {
+public static List<Cliente> leer() throws CSVParseException {
         List<Cliente> lista = new ArrayList<>();
         File archivo = new File(RUTA);
 
@@ -43,11 +44,14 @@ public static List<Cliente> leer() throws IOException {
 
                 try {
                 lista.add(Cliente.fromCSV(linea));
-            } catch (Exception e) {
-                System.err.println("Error al leer línea: " + linea + " → " + e.getMessage());
+            } catch (CSVParseException e) {
+                System.err.println("Error al parsear línea: " + linea );
             }
         }
-    }
+             } catch (IOException e) {
+          
+            throw new CSVParseException("Error al leer el archivo CSV: " + e.getMessage());
+        }
     return lista;
 }
             

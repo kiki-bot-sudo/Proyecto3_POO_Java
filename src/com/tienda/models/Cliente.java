@@ -1,5 +1,7 @@
 package com.tienda.models;
 
+import com.tienda.exceptions.CSVParseException;
+
 public class Cliente {
     private String id;
     private String nombre;
@@ -22,10 +24,10 @@ public class Cliente {
         return email;
     }
    
-    public static Cliente fromCSV(String linea) throws Exception {
+    public static Cliente fromCSV(String linea) throws CSVParseException {
         String[] campos = linea.split(",");
         if (campos.length < 3)
-            throw new Exception("Línea CSV inválida para Cliente: " + linea);
+            throw new CSVParseException("Línea CSV inválida para Cliente: " + linea);
 
         String id = campos[0].trim();
         String nombre = campos[1].trim();
