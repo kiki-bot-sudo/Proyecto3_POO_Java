@@ -9,6 +9,7 @@ public class Venta {
     private Cliente cliente;
     private Empleado empleado;
     private List<Producto> productos;
+    private List<Integer> cantidadesVendidas;
     private String fecha;
     private double total;
 
@@ -31,24 +32,45 @@ public class Venta {
         this.empleado = empleado;
         this.fecha = fecha;
         this.productos = new ArrayList<>();
+        this.cantidadesVendidas = new ArrayList<>();
         this.total = 0.0;
     }
 
-    public void agregarProducto(Producto productos) {
-        this.productos.add(productos);
+    public void agregarProducto(Producto producto) {
+        agregarProducto(producto, 1);
+    }
+
+    public void agregarProducto(Producto producto, int cantidadVendida) {
+        if (producto == null) {
+            throw new IllegalArgumentException("El producto no puede ser nulo");
+        }
+        if (cantidadVendida <= 0) {
+            throw new IllegalArgumentException("La cantidad vendida debe ser mayor que 0");
+        }
+
+        this.productos.add(producto);
+        this.cantidadesVendidas.add(cantidadVendida);
     }
 
     public double calcularTotal() {
         double acumulado = 0.0;
-        for (Producto producto : this.productos) {
-            acumulado += producto.calcularPrecioFinal() * producto.getCantidad();
+        for (int i = 0; i < this.productos.size(); i++) {
+            Producto producto = this.productos.get(i);
+            int cantidadVendida = this.cantidadesVendidas.get(i);
+            acumulado += producto.calcularPrecioFinal() * cantidadVendida;
         }
         this.total = acumulado;
         return this.total;
     }
 
+
+    //getters
     public List<Producto> getProductos() {
         return this.productos;
+    }
+
+    public List<Integer> getCantidadesVendidas() {
+        return this.cantidadesVendidas;
     }
 
     public double getTotal() {
