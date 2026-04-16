@@ -9,9 +9,11 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tienda.models.Producto; 
 import com.tienda.models.ProductoPerecible;
 import com.tienda.models.ProductoNoPerecible;
 import com.tienda.exceptions.ProductoException;
+
 
 public class ProductoCSV {
     private String ruta;

@@ -3,7 +3,7 @@ package com.tienda.models;
 import com.tienda.exceptions.ProductoException;
 import com.tienda.interfaces.Vendible;
 
-abstract class Producto implements Vendible{
+public abstract class Producto implements Vendible{
 
     private String codigo; 
     private String nombre;
