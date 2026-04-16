@@ -76,7 +76,6 @@ public class MenuConsola {
         System.out.println("Proveedores: " + servicio.getProveedores().size());
         System.out.println("Ventas: " + servicio.getVentas().size());
         System.out.println();
-        System.out.println("Persistencia:");
         System.out.println("- Datos cargados desde CSV al iniciar");
         System.out.println("- Datos guardados al agregar registros");
         System.out.println("===================");
@@ -101,8 +100,8 @@ public class MenuConsola {
 
     private void agregarCliente(Scanner scanner) {
         String id = leerTexto(scanner, "Id cliente: ");
-        String nombre = leerTexto(scanner, "Nombre: ");
-        String email = leerTexto(scanner, "Email: ");
+        String nombre = leerNombreValido(scanner, "Nombre: ");
+        String email = leerCorreoValido(scanner, "Email: ");
         servicio.agregarCliente(new Cliente(id, nombre, email));
         System.out.println("Cliente guardado.");
     }
@@ -129,8 +128,8 @@ public class MenuConsola {
 
     private void agregarEmpleado(Scanner scanner) throws SalarioInvalidoException, EmpleadoException {
         int tipo = leerEntero(scanner, "1 Cajero, 2 Gerente: ");
-        String id = leerTexto(scanner, "Id empleado: ");
-        String nombre = leerTexto(scanner, "Nombre: ");
+        String id = leerIdEmpleadoValido(scanner, "Id empleado (formato C000): ");
+        String nombre = leerNombreValido(scanner, "Nombre: ");
         double salario = leerDouble(scanner, "Salario: ");
 
         if (tipo == 1) {
@@ -207,6 +206,36 @@ public class MenuConsola {
             } catch (NumberFormatException e) {
                 System.out.println("Ingresa un valor valido.");
             }
+        }
+    }
+
+    private String leerNombreValido(Scanner scanner, String mensaje) {
+        while (true) {
+            String nombre = leerTexto(scanner, mensaje);
+            if (nombre.matches("[A-Za-zÁÉÍÓÚáéíóúÑñ ]+")) {
+                return nombre;
+            }
+            System.out.println("Nombre invalido. Usa solo letras y espacios.");
+        }
+    }
+
+    private String leerCorreoValido(Scanner scanner, String mensaje) {
+        while (true) {
+            String correo = leerTexto(scanner, mensaje);
+            if (correo.contains("@") && correo.indexOf('@') > 0 && correo.indexOf('@') < correo.length() - 1) {
+                return correo;
+            }
+            System.out.println("Correo invalido. Debe incluir @.");
+        }
+    }
+
+    private String leerIdEmpleadoValido(Scanner scanner, String mensaje) {
+        while (true) {
+            String id = leerTexto(scanner, mensaje).toUpperCase();
+            if (id.matches("C\\d{3}")) {
+                return id;
+            }
+            System.out.println("Id invalido. Usa el formato C000.");
         }
     }
 }
