@@ -63,7 +63,7 @@ public class ProductoPerecible extends Producto {
     public static ProductoPerecible fromCSV(String linea) throws ProductoException  {
         String[] p = linea.split(",");
         if (p.length < 8) {
-            throw new ProductoException("Linea inválida para ProductoPerecible (se esperan o se necesitan 8 campos): " + linea);
+            throw new ProductoException("Linea inválida para ProductoPerecible: " + linea);
         }
         double precio;
         int    cantidad;
@@ -71,11 +71,23 @@ public class ProductoPerecible extends Producto {
         try {
             precio    = Double.parseDouble(p[3].trim());
             cantidad  = Integer.parseInt(p[4].trim());
-            descuento = Double.parseDouble(p[7].trim());
+            descuento = Double.parseDouble(p[p.length >= 9 ? 8 : 7].trim());
         } catch (NumberFormatException e) {
             throw new ProductoException("Datos numéricos inválidos en la linea: " + linea);
         }
-        return new ProductoPerecible(p[1].trim(),p[2].trim(),p[5].trim(),p[6].trim(),cantidad,precio, descuento );
+        ProductoPerecible producto = new ProductoPerecible(
+                p[1].trim(),
+                p[2].trim(),
+                p[p.length >= 9 ? 6 : 5].trim(),
+                p[p.length >= 9 ? 7 : 6].trim(),
+                cantidad,
+                precio,
+                descuento
+        );
+        if (p.length >= 9) {
+            producto.setIdProveedor(p[5].trim());
+        }
+        return producto;
     }
 
     //getter 

@@ -13,11 +13,13 @@ import com.tienda.models.Cliente;
 import com.tienda.models.Producto;
 import com.tienda.models.ProductoNoPerecible;
 import com.tienda.models.ProductoPerecible;
+import com.tienda.models.Proveedor;
 import com.tienda.models.Venta;
 import com.tienda.servicios.TiendaServicio;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class MenuConsola {
 
@@ -43,6 +45,7 @@ public class MenuConsola {
                         case 5 -> agregarEmpleado(scanner);
                         case 6 -> registrarVenta(scanner);
                         case 7 -> listarClientesYEmpleados();
+                        case 8 -> agregarProveedor(scanner);
                         case 0 -> System.out.println("Saliendo...");
                         default -> System.out.println("Opcion invalida");
                     }
@@ -63,7 +66,8 @@ public class MenuConsola {
         System.out.println("4. Agregar producto");
         System.out.println("5. Agregar empleado");
         System.out.println("6. Registrar venta");
-        System.out.println("7. Listar clientes y empleados");
+        System.out.println("7. Listar clientes,empleados y proveedores");
+        System.out.println("8. Agregar proveedor");
         System.out.println("0. Salir");
     }
 
@@ -92,6 +96,7 @@ public class MenuConsola {
             System.out.println("- " + producto.getClass().getSimpleName()
                     + " | " + producto.getCodigo()
                     + " | " + producto.getNombre()
+                    + " | proveedor: " + producto.getIdProveedor()
                     + " | categoria: " + producto.getCategoria()
                     + " | disponible: " + producto.estaDisponible()
                     + " | precio final: $" + producto.calcularPrecioFinal());
@@ -107,6 +112,12 @@ public class MenuConsola {
     }
 
     private void agregarProducto(Scanner scanner) throws ProductoException {
+        if (servicio.getProveedores().isEmpty()) {
+            System.out.println("Primero agrega al menos un proveedor (opcion 8).");
+            return;
+        }
+
+        String idProveedor = leerIdProveedorExistente(scanner, "Id proveedor: ");
         int tipo = leerEntero(scanner, "1 Perecible, 2 No perecible: ");
         String codigo = leerTexto(scanner, "Codigo: ");
         String nombre = leerTexto(scanner, "Nombre: ");
@@ -115,15 +126,19 @@ public class MenuConsola {
         double precio = leerDouble(scanner, "Precio: ");
 
         if (tipo == 1) {
-            String fechaVencimiento = leerTexto(scanner, "Fecha vencimiento: ");
+            String fechaVencimiento = leerFechaValida(scanner, "Fecha vencimiento (00/00/00): ");
             double descuento = leerDouble(scanner, "Descuento: ");
-            servicio.agregarProducto(new ProductoPerecible(codigo, nombre, fechaVencimiento, categoria, cantidad, precio, descuento));
+            ProductoPerecible producto = new ProductoPerecible(codigo, nombre, fechaVencimiento, categoria, cantidad, precio, descuento);
+            producto.setIdProveedor(idProveedor);
+            servicio.agregarProducto(producto);
         } else {
             double promocion = leerDouble(scanner, "Promocion: ");
-            servicio.agregarProducto(new ProductoNoPerecible(codigo, nombre, categoria, cantidad, precio, promocion));
+            ProductoNoPerecible producto = new ProductoNoPerecible(codigo, nombre, categoria, cantidad, precio, promocion);
+            producto.setIdProveedor(idProveedor);
+            servicio.agregarProducto(producto);
         }
 
-        System.out.println("Producto guardado.");
+        System.out.println("Producto guardado con proveedor " + idProveedor + ".");
     }
 
     private void agregarEmpleado(Scanner scanner) throws SalarioInvalidoException, EmpleadoException {
@@ -144,24 +159,45 @@ public class MenuConsola {
         System.out.println("Empleado guardado.");
     }
 
-    private void registrarVenta(Scanner scanner)
-            throws ClienteNoEncontradoException, EmpleadoNoEncontradoException, SinCodigoEncontradoException {
+        private void registrarVenta(Scanner scanner)
+            throws ClienteNoEncontradoException, EmpleadoNoEncontradoException, SinCodigoEncontradoException, ProductoException {
         String idVenta = leerTexto(scanner, "Id venta: ");
         Cliente cliente = servicio.buscarClientePorId(leerTexto(scanner, "Id cliente: "));
         Empleado empleado = servicio.buscarEmpleadoPorId(leerTexto(scanner, "Id empleado: "));
-        String fecha = leerTexto(scanner, "Fecha: ");
+        String fecha = leerFechaValida(scanner, "Fecha (00/00/00): ");
         Venta venta = new Venta(idVenta, cliente, empleado, fecha);
 
         int cantidadItems = leerEntero(scanner, "Cuantos productos va a agregar: ");
+        List<Producto> productosVenta = new ArrayList<>();
+        List<Integer> cantidadesVenta = new ArrayList<>();
         for (int i = 0; i < cantidadItems; i++) {
             Producto producto = servicio.buscarProductoPorCodigo(leerTexto(scanner, "Codigo producto: "));
             int cantidadVendida = leerEntero(scanner, "Cantidad vendida: ");
+            if (cantidadVendida > producto.getCantidad()) {
+                throw new ProductoException("No hay suficiente stock para " + producto.getNombre());
+            }
+            productosVenta.add(producto);
+            cantidadesVenta.add(cantidadVendida);
+        }
+
+        for (int i = 0; i < productosVenta.size(); i++) {
+            Producto producto = productosVenta.get(i);
+            int cantidadVendida = cantidadesVenta.get(i);
+            producto.reducirCantidad(cantidadVendida);
             venta.agregarProducto(producto, cantidadVendida);
         }
 
         venta.calcularTotal();
         servicio.registrarVenta(venta);
         System.out.println("Venta guardada. Total: $" + venta.getTotal());
+    }
+
+    private void agregarProveedor(Scanner scanner) {
+        String id = leerTexto(scanner, "Id proveedor: ");
+        String nombre = leerNombreValido(scanner, "Nombre proveedor: ");
+        String telefono = leerTelefonoValido(scanner, "Telefono (solo numeros): ");
+        servicio.agregarProveedor(new Proveedor(id, nombre, telefono));
+        System.out.println("Proveedor guardado.");
     }
 
     private void listarClientesYEmpleados() {
@@ -180,6 +216,15 @@ public class MenuConsola {
         } else {
             for (Empleado empleado : servicio.getEmpleados()) {
                 System.out.println("- " + empleado.getId() + " | " + empleado.getNombre() + " | " + empleado.getPuesto());
+            }
+        }
+
+        System.out.println("Proveedores:");
+        if (servicio.getProveedores().isEmpty()) {
+            System.out.println("- Sin proveedores");
+        } else {
+            for (Proveedor proveedor : servicio.getProveedores()) {
+                System.out.println("- " + proveedor.getId() + " | " + proveedor.getNombre() + " | " + proveedor.getTelefono());
             }
         }
     }
@@ -236,6 +281,38 @@ public class MenuConsola {
                 return id;
             }
             System.out.println("Id invalido. Usa el formato C000.");
+        }
+    }
+
+    private String leerFechaValida(Scanner scanner, String mensaje) {
+        while (true) {
+            String fecha = leerTexto(scanner, mensaje);
+            if (fecha.matches("\\d{2}/\\d{2}/\\d{2}")) {
+                return fecha;
+            }
+            System.out.println("Fecha invalida. Usa formato 00/00/00.");
+        }
+    }
+
+    private String leerTelefonoValido(Scanner scanner, String mensaje) {
+        while (true) {
+            String telefono = leerTexto(scanner, mensaje);
+            if (telefono.matches("\\d+")) {
+                return telefono;
+            }
+            System.out.println("Telefono invalido. Usa solo numeros.");
+        }
+    }
+
+    private String leerIdProveedorExistente(Scanner scanner, String mensaje) {
+        while (true) {
+            String id = leerTexto(scanner, mensaje);
+            for (Proveedor proveedor : servicio.getProveedores()) {
+                if (proveedor.getId().equals(id)) {
+                    return id;
+                }
+            }
+            System.out.println("Proveedor no encontrado. Registra uno en la opcion 8.");
         }
     }
 }

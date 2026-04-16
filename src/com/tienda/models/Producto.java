@@ -9,9 +9,14 @@ public abstract class Producto implements Vendible{
     private String nombre;
     private double precio;
     private int cantidad;
+    private String idProveedor;
 
     
     public Producto(String codigo, String nombre, int cantidad, double precio )throws ProductoException { 
+        this(codigo, nombre, cantidad, precio, "");
+    }
+
+    public Producto(String codigo, String nombre, int cantidad, double precio, String idProveedor) throws ProductoException {
         if (codigo == null || codigo.trim().isEmpty()) {
             throw new ProductoException("El código del producto no puede estar vacío");
         }
@@ -30,6 +35,7 @@ public abstract class Producto implements Vendible{
         this.precio = precio;
         this.codigo = codigo;
         this.nombre = nombre;
+        this.idProveedor = idProveedor == null ? "" : idProveedor.trim();
 
 
     }
@@ -60,7 +66,8 @@ public abstract class Producto implements Vendible{
     public String toCSV() {
         return new StringBuilder()
             .append(codigo).append(",").append(nombre).append(",").append(precio)
-            .append(",").append(cantidad).toString();
+            .append(",").append(cantidad)
+            .append(",").append(idProveedor).toString();
     }
 
 
@@ -78,6 +85,14 @@ public abstract class Producto implements Vendible{
     }
     public double getPrecio() {
         return precio;
+    }
+
+    public String getIdProveedor() {
+        return idProveedor;
+    }
+
+    public void setIdProveedor(String idProveedor) {
+        this.idProveedor = idProveedor == null ? "" : idProveedor.trim();
     }
 
     // setter 
